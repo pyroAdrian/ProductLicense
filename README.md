@@ -1,4 +1,4 @@
-Product License
+Product License Extension for Magento
 ===============
 
 Is a Magento extension that offers unique license key to the customers when a product is purchased.
