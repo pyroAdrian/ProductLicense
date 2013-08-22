@@ -1,0 +1,53 @@
+<?php
+/**
+ * @var $this Pyro_Licenses_Block_List
+ * @see Pyro_Licenses_Block_List
+ */
+?>
+<div id="news_list_messages"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
+<div class="page-title">
+    <h1><?php echo Mage::helper('pyro_licenses')->__('My Products Licenses') ?></h1>
+</div>
+<?php $collection = $this->getCollection(); ?>
+<div class="news_list_view">
+    <?php if(count($collection)): ?>
+    <table class="data-table" id="my-orders-table">
+        <col width="1" />
+        <col width="1" />
+        <col />
+        <col width="1" />
+        <col width="1" />
+        <col width="1" />
+        <thead>
+            <tr>
+                <th><?php echo $this->__('Order #') ?></th>
+                <th><?php echo $this->__('Product') ?></th>
+                <th><?php echo $this->__('License Key') ?></th>
+                <th><?php echo $this->__('Status') ?></th>
+                <th><?php echo $this->__('Create Date') ?></th>
+             </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($collection as $license): ?>
+            <tr>
+                <td><a href="<?php echo $this->getUrl('sales/order/history/'); ?>"><?php echo  $license->getOrderId(); ?></a></td>
+                <td><?php echo $license->getName() ?></td>
+                <td width="300"><?php echo $this->escapeHtml($license->getLicenseKey()) ?></td>
+                <td>
+                    <?php if ((int) $license->getStatus()): ?>
+                        <?php echo $this->__('Enabled'); ?>
+                    <?php else: ?>
+                        <?php echo $this->__('Disabled'); ?>
+                    <?php endif; ?>
+                </td>
+                <td><?php echo $this->formatDate($license->getCreatedAt(), 'medium') ?></td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <script type="text/javascript">decorateTable('licenses-table');</script>
+    <?php echo $this->getPager() ?>
+    <?php else: ?>
+        <p><?php echo $this->__('You don\'t have any licenses.'); ?></p>
+    <?php endif ?>
+</div>

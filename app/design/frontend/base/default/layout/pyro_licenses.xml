@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<layout>
+    <customer_account>
+        <reference name="customer_account_navigation">
+            <action method="addLink" translate="label" module="pyro_licenses" after="downloadable_products">
+            	<name>licenses</name>
+            	<path>pyro_licenses/index</path>
+            	<label>My Products Licenses</label>
+            </action>
+        </reference>
+    </customer_account>
+    <pyro_licenses_index_index translate="label">
+		<label>My Products Licenses</label>
+		<update handle="customer_account"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
+        </reference>
+        <reference name="my.account.wrapper">
+			  <block type="pyro_licenses/list" name="licenses.list" template="pyro/licenses/list.phtml">
+			      <block type="page/html_pager" name="licenses.list.pager" as="licenses_list_pager" />
+			  </block>
+        </reference>		
+    </pyro_licenses_index_index>       
+</layout> 

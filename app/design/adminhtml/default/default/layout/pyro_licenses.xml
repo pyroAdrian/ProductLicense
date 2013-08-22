@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<layout>
+    <adminhtml_licenses_index>
+        <reference name="content">
+            <block type="pyro_licenses/adminhtml_licenses" name="licenses" template="pyro/licenses/import.phtml" >
+                         <block type="pyro_licenses/adminhtml_licenses_import_form" name="import_form" />
+
+                
+            </block>
+        </reference>
+    </adminhtml_licenses_index>
+
+    <adminhtml_licenses_grid>
+        <block type="pyro_licenses/adminhtml_licenses_grid" name="root"/>
+    </adminhtml_licenses_grid>
+    
+    <adminhtml_licenses_edit>
+        <update handle="editor"/>
+        <reference name="content">
+            <block type="pyro_licenses/adminhtml_licenses_edit" name="license_edit" />
+        </reference>
+
+        <reference name="left">
+            <block type="pyro_licenses/adminhtml_licenses_edit_tabs" name="license_edit_tabs">
+                <block type="pyro_licenses/adminhtml_licenses_edit_tab_main" name="license_edit_tab_main" />
+                <action method="addTab">
+                	<name>main_section</name>
+                	<block>license_edit_tab_main</block>
+                </action>
+            </block>
+        </reference>        
+    </adminhtml_licenses_edit>
+    <adminhtml_importlicenses_index>
+        <reference name="content">
+        </reference>
+    </adminhtml_importlicenses_index>    
+</layout>

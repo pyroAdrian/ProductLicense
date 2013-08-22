@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<config>
+    <menu>
+         <licenses translate="title" module="pyro_licenses">
+            <title>Product Licenses</title>
+            <sort_order>65</sort_order>
+            <children>
+                <manage translate="title" module="pyro_licenses">
+                    <title>Licenses Management</title>
+                    <action>adminhtml/licenses</action>
+                    <sort_order>50</sort_order>
+                </manage>
+                <settings module="adminhtml">
+                    <title>Settings</title>
+                    <sort_order>51</sort_order>
+                    <action>adminhtml/system_config/edit/section/licenses</action>
+                </settings>                 
+            </children>
+         </licenses>
+    </menu>
+
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <licenses translate="title" module="pyro_licenses">
+                        <title>Product Licenses</title>
+                        <sort_order>65</sort_order>
+                        <children>
+                            <manage translate="title">
+                                <title>Licenses Management</title>
+                                <sort_order>0</sort_order>
+                                <children>
+                                    <save translate="title">
+                                        <title>Save License</title>
+                                        <sort_order>0</sort_order>
+                                    </save>
+                                    <delete translate="title">
+                                        <title>Delete License</title>
+                                        <sort_order>10</sort_order>
+                                    </delete>
+                                </children>
+                            </manage>
+                        </children>
+                    </licenses>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <licenses translate="title" module="pyro_licenses">
+                                        <title>Licenses Management</title>
+                                    </licenses>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>
