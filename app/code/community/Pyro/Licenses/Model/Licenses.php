@@ -32,17 +32,6 @@ class Pyro_Licenses_Model_Licenses extends Mage_Core_Model_Abstract
     }
     
     /**
-     * Set the default status 
-     *  
-     * @param integer $status
-     * @return integer $status
-     */
-    public function setStatus($status = self::STATUS_ENABLED) 
-    {
-       return $status; 
-    }
-    
-    /**
      * Verify if the license key exists
      * 
      * @param string $licenseKey

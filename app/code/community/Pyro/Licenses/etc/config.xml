@@ -102,13 +102,4 @@
             </updates>
         </layout>
     </adminhtml>
-    <default>
-        <licenses>
-            <view>
-                <enabled>1</enabled>
-                <items_per_page>20</items_per_page>
-                <days_difference>3</days_difference>
-            </view>
-        </licenses>
-    </default>    
 </config>
