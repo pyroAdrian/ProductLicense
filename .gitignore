@@ -64,6 +64,7 @@ build/
 *.pgc
 *.pgd
 *.rsp
+*.rsp
 *.sbr
 *.tlb
 *.tli
@@ -140,7 +141,6 @@ csx
 AppPackages/
 
 # Others
-sql/
 *.Cache
 ClientBin/
 [Ss]tyle[Cc]op.*
