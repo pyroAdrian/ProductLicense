@@ -14,43 +14,43 @@ class Pyro_Licenses_Model_Observer
         $order   =   $event->getInvoice()->getOrder();
         $invoice = $observer->getEvent()->getInvoice();
         switch ($invoice->getState()) {
-        	case Mage_Sales_Model_Order_Invoice::STATE_PAID :
-        	    $customerId = $invoice->getCustomerId();
-        	    $orderId    = $order->getIncrementId();
-        	    $storeId    = $invoice->getStoreId();
-        	    $items      = $invoice->getAllItems();
-        	    $model      = Mage::getModel('pyro_licenses/licenses');
-        	    $emailData = array();
-        	    
-        	    foreach ($items as $item) {
-                   $product =  Mage::getResourceModel('catalog/product')->getAttributeRawValue($item->getProductId(), 'license', $storeId);
-                   if (!$product) {
-                      continue; 
-                   }
-                   
-                   $qty        = (int) $item->getQty();
-                   $productId  = $item->getProductId();
-                   $collection = $model->getCollection()->getAvailableLicenses();
-                   $collection->getSelect()->limit($qty);
-                   
-                   $emailData[$productId] =  array(
-        	           'product' => $item,
-                   );
-                   
-                   foreach ($collection as $item) {
-                       $qty--;
-                       $item->setStatus(Pyro_Licenses_Model_Licenses::STATUS_ENABLED);
-                       $item->setCustomerId($customerId);
-                       $item->setProductId($productId);
-                       $item->setOrderId($orderId);
-                       $item->save();
+            case Mage_Sales_Model_Order_Invoice::STATE_PAID :
+                $customerId = $invoice->getCustomerId();
+                $orderId    = $order->getIncrementId();
+                $storeId    = $invoice->getStoreId();
+                $items      = $invoice->getAllItems();
+                $model      = Mage::getModel('pyro_licenses/licenses');
+                $emailData = array();
 
-                       $emailData[$productId]['licenses'][] = $item->getLicenseKey();
-                   }
-                   
-                   // If there are no licenses in database generate for the remaining quantity                   
-                   if ($qty > 0) {
-                       for($i = 1; $i <= $qty; $i++) {
+                foreach ($items as $item) {
+                    $product =  Mage::getResourceModel('catalog/product')->getAttributeRawValue($item->getProductId(), 'license', $storeId);
+                    if (!$product) {
+                        continue; 
+                    }
+
+                    $qty        = (int) $item->getQty();
+                    $productId  = $item->getProductId();
+                    $collection = $model->getCollection()->getAvailableLicenses();
+                    $collection->getSelect()->limit($qty);
+
+                    $emailData[$productId] =  array(
+                        'product' => $item,
+                    );
+       
+                    foreach ($collection as $item) {
+                        $qty--;
+                        $item->setStatus(Pyro_Licenses_Model_Licenses::STATUS_ENABLED);
+                        $item->setCustomerId($customerId);
+                        $item->setProductId($productId);
+                        $item->setOrderId($orderId);
+                        $item->save();
+
+                        $emailData[$productId]['licenses'][] = $item->getLicenseKey();
+                    }
+
+                    // If there are no licenses in database generate for the remaining quantity                   
+                    if ($qty > 0) {
+                        for ($i = 1; $i <= $qty; $i++) {
                            $item = Mage::getModel('pyro_licenses/licenses');
                            $licenseKey = Mage::helper('pyro_licenses/generate')->license();
                            $item->setStatus(Pyro_Licenses_Model_Licenses::STATUS_ENABLED);
@@ -60,14 +60,14 @@ class Pyro_Licenses_Model_Observer
                            $item->setLicenseKey($licenseKey);
                            $item->save();
                            $emailData[$productId]['licenses'][] = $licenseKey;
-                       }
-                   }  
-        	    }
+                        }
+                    }  
+                }
 
-        	    if(count($emailData)) {
-        	        $this->sendLicensesMail($order, $emailData);
-        	    }
-       	    break;
+                if(count($emailData)) {
+                  $this->sendLicensesMail($order, $emailData);
+                }
+            break;
         }
         
         return $this;
